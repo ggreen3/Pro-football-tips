@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Football Tips</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Adjusting card styles */
+        .tip-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .vip-card {
+            background-color: #f9f9f9;
+            width: 80%; /* Make VIP cards larger */
+            margin: 0 auto 20px auto;
+            padding: 30px;
+        }
+
+        .vip-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .vip-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .admin, .telegram {
+            text-align: center;
+            margin: 30px auto;
+        }
+
+        .admin a, .telegram a {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .admin a:hover, .telegram a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Live scores styles */
+        .live-scores-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .match-tile {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .team {
+            display: flex;
+            align-items: center;
+        }
+
+        .team img {
+            width: 30px;
+            margin-right: 10px;
+        }
+
+        .score {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Payment Modal Styling */
+        #paymentModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .payment-container button {
+            margin-top: 10px;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+     
+    /* Payment Modal Styling */
+    #paymentModal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 10000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .payment-container {
+        background-color: #fff;
+        padding: 2em;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 350px;
+    }
+
+    .payment-container h2 {
+        font-size: 1.8em;
+        color: #333;
+        margin-bottom: 1em;
+    }
+
+    .payment-container h3 {
+        font-size: 1.2em;
+        margin: 1em 0;
+        color: #333;
+    }
+
+    #paypal-payment form {
+        margin-bottom: 1.5em;
+    }
+
+    #paypal-payment button {
+        background-color: #0d6efd;
+        color: white;
+        padding: 0.8em 1.5em;
+        border: none;
+        cursor: pointer;
+        font-size: 1em;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    #paypal-payment button:hover {
+        background-color: #0056b3;
+    }
+
+    #crypto-payment {
+        margin: 1.5em 0;
+        color: #333;
+        font-size: 1em;
+    }
+
+    #crypto-payment p {
+        margin: 0.5em 0;
+    }
+
+    #crypto-payment span {
+        font-weight: bold;
+        color: #0d6efd;
+    }
+
+    #paymentScreenshot {
+        padding: 0.5em;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-bottom: 1em;
+        width: 100%;
+    }
+
+    button {
+        background-color: #0d6efd;
+        color: white;
+        padding: 0.8em 1.5em;
+        border: none;
+        cursor: pointer;
+        font-size: 1em;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        margin: 0.5em 0.2em;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Close Button */
+    #paymentModal button:last-child {
+        background-color: #dc3545;
+    }
+
+    #paymentModal button:last-child:hover {
+        background-color: #c82333;
+    }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container">
+            <h1>Pro Football Tips</h1>
+            <nav>
+                <a href="free.html">Free Tips</a>
+                <a href="#vip-tips">VIP Tips</a>
+                <a href="#telegram1">Telegram</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Your Trusted Football Tips Hub</h2>
+        <p>Daily tips to maximize your winnings. Join the community of winning bettors!</p>
+        <button onclick="location.href='free.html'">Get Started</button>
+    </section>
+
+    <!-- Free Tips Section -->
+    <section id="free-tips" class="section">
+        <div class="container">
+            <h2>Daily Free Tips</h2>
+            <a href="free.html" style="text-decoration: none;">
+                <div class="tip-card">
+                    <!-- Free card intentionally left blank -->
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- VIP Tips Section -->
+    <section id="vip-tips" class="section vip-section">
+        <div class="container">
+            <h2>Exclusive VIP Tips</h2>
+            <p>Access high-odds tips and correct score predictions by subscribing!</p>
+            <div class="vip-grid">
+                <div class="tip-card vip-card" onclick="showPaymentModal('VIP Tier 1', 5)">
+                    <p class="vip-price">$5 - VIP Tier 1</p>
+                </div>
+                <div class="tip-card vip-card" onclick="showPaymentModal('VIP Tier 2', 10)">
+                    <p class="vip-price">$10 - VIP Tier 2</p>
+                </div>
+                <div class="tip-card vip-card" onclick="showPaymentModal('VIP Tier 3', 20)">
+                    <p class="vip-price">$20 - VIP Tier 3</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Telegram Section -->
+    <section id="telegram1" class="telegram">
+        <h2>Join Us on Telegram</h2>
+        <a href="https://t.me/+V0W-8TDhUeE5Nzg0" target="_blank">Join Now</a>
+    </section>
+    
+   <!-- Privacy Policy Section -->
+<section class="privacy-policy">
+    <h2>Privacy Policy</h2>
+    <button id="privacyPolicyButton" class="btn">Read Our Privacy Policy</button>
+</section>
+
+<!-- Privacy Policy Modal -->
+<div id="privacyPolicyModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Privacy Policy</h3>
+        <p>Effective Date: 28/11/2024</p>
+        
+        <p>Welcome to Pro Football Tips ! This Privacy Policy explains how we collect, use, and safeguard your personal information when you use our website and services. Please read it carefully.</p>
+
+        <h4>1. Information We Collect</h4>
+        <p>We collect the following types of information:</p>
+        <ul>
+            <li><strong>Personal Information:</strong> Name, email address, phone number, etc.</li>
+            <li><strong>Non-Personal Information:</strong> IP address, browser type, device information, etc.</li>
+            <li><strong>Cookies:</strong> We use cookies to enhance your experience on our site. You can adjust your cookie settings in your browser.</li>
+        </ul>
+
+        <h4>2. How We Use Your Information</h4>
+        <p>Your information is used for the following purposes:</p>
+        <ul>
+            <li>To provide and maintain our services.</li>
+            <li>To personalize your experience and respond to your requests.</li>
+            <li>To communicate with you about updates, promotions, and important notices.</li>
+            <li>To monitor and analyze usage patterns to improve our website and services.</li>
+        </ul>
+
+        <h4>3. Data Security</h4>
+        <p>We take reasonable steps to protect your personal information from unauthorized access or disclosure. However, no method of transmission over the internet is completely secure, and we cannot guarantee absolute security.</p>
+
+        <h4>4. Your Rights</h4>
+        <p>You have the right to:</p>
+        <ul>
+            <li>Access, correct, or delete your personal data.</li>
+            <li>Withdraw consent for data collection at any time (if applicable).</li>
+            <li>Request a copy of your data in a portable format.</li>
+        </ul>
+
+        <h4>5. Cookies</h4>
+        <p>We use cookies and similar technologies to enhance your experience on our site. You can manage your cookie preferences through your browser settings.</p>
+
+        <h4>6. Third-Party Links</h4>
+        <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of those sites. Please review their respective privacy policies.</p>
+
+        <h4>7. Changes to This Privacy Policy</h4>
+        <p>We may update this Privacy Policy from time to time. When we do, we will post the revised version on this page and update the effective date above. Please check periodically for any changes.</p>
+
+        <h4>8. Contact Us</h4>
+        <p>If you have any questions or concerns about this Privacy Policy, please contact us at:</p>
+        <p>Email: alanstrath3@gmail.com </p>
+    </div>
+</div>
+
+<!-- Modal CSS -->
+<style>
+    /* Centering the Privacy Policy Section */
+    .privacy-policy {
+        text-align: center;
+        margin: 40px 0;
+    }
+
+    .privacy-policy h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Button Styling */
+    .btn {
+        padding: 12px 30px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.6);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 800px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+    }
+
+    .modal h3 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .modal p, .modal ul {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .modal ul {
+        padding-left: 20px;
+    }
+
+    .modal ul li {
+        margin-bottom: 10px;
+    }
+
+    /* Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+    }
+
+    /* Modal Background Transition */
+    .modal.open {
+        display: block;
+    }
+</style>
+
+<!-- Modal JavaScript -->
+<script>
+    // Get the modal
+    var modal = document.getElementById("privacyPolicyModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("privacyPolicyButton");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+        modal.classList.add('open');
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.classList.remove('open');
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.classList.remove('open');
+        }
+    }
+</script>
+
+<!-- Live Scores Section -->
+<div id="live-scores" class="live-scores-container">
+    <h2>Live Scores</h2>
+    <div id="scores-display" class="scores-display">
+        <!-- Live scores will be injected here by JavaScript -->
+    </div>
+</div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal">
+        <div class="payment-container">
+            <h2>Complete Payment for VIP Access</h2>
+            <p id="vipMessage"></p>
+            <h3>Select Payment Method:</h3>
+            
+            <!-- PayPal Button (Using PayPal's free button method) -->
+            <div id="paypal-payment">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="YOUR_PAYPAL_BUTTON_ID">
+                    <button type="submit">Pay via PayPal</button>
+                </form>
+            </div>
+
+            <!-- Crypto Payment Section (with placeholder wallet addresses) -->
+            <div id="crypto-payment">
+                <p><strong>USDT:</strong> <span id="usdt-wallet">
+                    0x050fd0f4fa33e59412ad17e837623ef1ed3e802b</span></p>
+                    <p><strong>Solana:</strong> <span id="solana-wallet">8AsfT4XEtnhYD6sDDTXYppdFYMDNkndDUK6muk92m3hY</span></p>
+                        <p><strong>Etherium: </strong> <span id="etherium-wallet">0x050fd0f4fa33e59412ad17e837623ef1ed3e802b</span></p>
+                <p><strong>Worldcoin:</strong> <span id="worldcoin-wallet">0x429cdf69eedb4abad2a510d332a632815028eed4</span></p>
+                <p><strong>BTC:</strong> <span id="btc-wallet">3CVGTCDdhK5meF7JJnpuaiegCLwaqUD3Po</span></p>
+            </div>
+
+            <input type="file" id="paymentScreenshot" accept="image/*">
+            <button onclick="validatePayment()">Submit Screenshot</button>
+            <button onclick="closePaymentModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Show the payment modal
+        function showPaymentModal(tier, price) {
+            document.getElementById("vipMessage").innerText = `Please complete the payment of $${price} for ${tier} to gain access.`;
+            document.getElementById("paymentModal").style.display = "flex";
+        }
+
+        // Close the payment modal
+        function closePaymentModal() {
+            document.getElementById("paymentModal").style.display = "none";
+        }
+
+        function validatePayment() {
+    var screenshot = document.getElementById("paymentScreenshot").files[0];
+    if (screenshot) {
+        // Create a new FileReader instance to read the image
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var img = new Image();
+            img.src = event.target.result;
+
+            img.onload = function() {
+                // Use Tesseract.js to recognize text from the image
+                Tesseract.recognize(
+                    img,
+                    'eng', // Language, you can use 'eng' for English
+                    {
+                        logger: (m) => console.log(m) // Optional: Log progress
+                    }
+                ).then(({ data: { text } }) => {
+                    console.log(text); // Output the extracted text
+
+                    // Check if the extracted text contains "payment complete"
+                    if (text.includes("payment complete")) {
+                        sendEmailConfirmation();
+                    } else {
+                        alert("Invalid payment screenshot.");
+                    }
+                });
+            };
+        };
+
+        // Read the image file
+        reader.readAsDataURL(screenshot);
+    } else {
+        alert("Please upload a payment screenshot.");
+    }
+}
+
+        // Send an email with the payment confirmation
+        function sendEmailConfirmation() {
+            window.location.href = "mailto:georgeobuya883@gmail.com?subject=Payment Confirmation&body=Please confirm my payment.";
+            alert("Payment successful! You can now access your VIP content.");
+            // Redirect to the correct tier page
+            window.location.href = "tier1.html"; // Change based on the tier
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
+
+    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Pro Football Tips. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

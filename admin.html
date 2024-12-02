@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="admin.css">
+    <script defer src="admin.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <h1>Admin Panel</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="free.html">View Free Tips</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="login-section">
+        <h2>Please enter the admin password to proceed:</h2>
+        <input type="password" id="admin-password" placeholder="Password">
+        <button id="login-button">Login</button>
+        <div id="login-error" style="color: red; display: none;">Incorrect password. Try again.</div>
+    </section>
+
+    <section id="admin-section" style="display: none;">
+        <h2>Edit Match Cards</h2>
+        <div>
+            <label for="tier-select">Select Tier:</label>
+            <select id="tier-select">
+                <option value="free">Free Tier</option>
+                <option value="tier1">Tier 1</option>
+                <option value="tier2">Tier 2</option>
+                <option value="tier3">Tier 3</option>
+            </select>
+        </div>
+
+        <div class="edit-card-form">
+            <label for="card-select">Select Card to Edit:</label>
+            <select id="card-select">
+                <option value="0">Card 1</option>
+                <option value="1">Card 2</option>
+                <option value="2">Card 3</option>
+                <option value="3">Card 4</option>
+                <option value="4">Card 5</option>
+                <option value="5">Card 6</option>
+            </select>
+
+            <!-- Form Fields Here (similar to previous ones) -->
+
+            <div>
+                <label for="match-date">Date:</label>
+                <input type="date" id="match-date" />
+            </div>
+
+            <div>
+                <label for="match-division">Division:</label>
+                <input type="text" id="match-division" />
+            </div>
+
+            <div>
+                <label for="match-team1">Team 1:</label>
+                <input type="text" id="match-team1" />
+                <div class="image-upload-container">
+                    <label for="team1-logo">Team 1 Logo:</label>
+                    <input type="file" id="team1-logo" accept="image/*" />
+                    <img id="team1-logo-preview" class="logo-preview" src="/placeholder-logo.png" alt="Team 1 Logo Preview">
+                </div>
+            </div>
+
+            <div>
+                <label for="match-team2">Team 2:</label>
+                <input type="text" id="match-team2" />
+                <div class="image-upload-container">
+                    <label for="team2-logo">Team 2 Logo:</label>
+                    <input type="file" id="team2-logo" accept="image/*" />
+                    <img id="team2-logo-preview" class="logo-preview" src="/placeholder-logo.png" alt="Team 2 Logo Preview">
+                </div>
+            </div>
+
+            <div>
+                <label for="match-pick">Pick:</label>
+                <input type="text" id="match-pick" />
+            </div>
+
+            <div>
+                <label for="match-odds">Odds:</label>
+                <input type="number" id="match-odds" step="0.1" />
+            </div>
+
+            <div>
+                <label for="match-status">Status:</label>
+                <input type="text" id="match-status" />
+            </div>
+
+            <div>
+                <label for="match-score">Score:</label>
+                <input type="text" id="match-score" />
+            </div>
+
+            <button id="save-card">Save Changes</button>
+        </div>
+    </section>
+</body>
+</html>
