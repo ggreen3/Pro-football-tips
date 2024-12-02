@@ -18,7 +18,7 @@ let matchCards = [
 // Event Listener to handle login
 document.getElementById('login-button').addEventListener('click', function() {
     const password = document.getElementById('admin-password').value;
-    if (password === 'kinggeorge..1') {
+    if (password === 'betsy12') {
         document.getElementById('login-section').style.display = 'none';
         document.getElementById('admin-section').style.display = 'block';
         getLiveLocation();
