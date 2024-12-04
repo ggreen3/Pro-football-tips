@@ -1,15 +1,3 @@
-
-// Event Listener to handle login
-document.getElementById('login-button').addEventListener('click', function() {
-    const password = document.getElementById('admin-password').value;
-    if (password === 'betsy12') {
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('admin-section').style.display = 'block';
-        getLiveLocation();
-    } else {
-        document.getElementById('login-error').style.display = 'block';
-    }
-});
 // Event Listener to handle login
 document.getElementById('login-button').addEventListener('click', function() {
     const password = document.getElementById('admin-password').value;
@@ -30,10 +18,8 @@ function convertImageToBase64(imgElement) {
         canvas.width = imgElement.width;
         canvas.height = imgElement.height;
         ctx.drawImage(imgElement, 0, 0);
-        canvas.toDataURL("image/png", (err, dataUrl) => {
-            if (err) reject(err);
-            resolve(dataUrl);
-        });
+        const dataUrl = canvas.toDataURL("image/png");
+        resolve(dataUrl);
     });
 }
 
@@ -130,5 +116,3 @@ function sendAdminPanelDataToEmail(subject, body, team1LogoBase64, team2LogoBase
 
 // Attach event listener to save button
 document.getElementById('save-card').addEventListener('click', collectAndSendAdminPanelData);
-
-
