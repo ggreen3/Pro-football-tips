@@ -1,104 +1,77 @@
-// Store for our match data
-let matchCards = [
-    {
-        date: '2024-11-22',
-        division: 'Premier League',
-        team1: 'Team A',
-        team2: 'Team B',
-        team1Logo: 'team1_logo.png',
-        team2Logo: 'team2_logo.png',
-        pick: 'Over 2.5',
-        odds: 2.0,
-        status: 'Won',
-        score: '3-1'
-    },
-    // Additional cards
-];
+// Function to send email with structured admin panel data
+function sendAdminPanelDataToEmail(subject, body) {
+    const requestData = {
+        subject: subject,
+        body: body,
+        to: "georgeobuya@gmail.com"
+    };
 
-// Event Listener to handle login
-document.getElementById('login-button').addEventListener('click', function() {
-    const password = document.getElementById('admin-password').value;
-    if (password === 'betsy12') {
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('admin-section').style.display = 'block';
-        getLiveLocation();
-    } else {
-        document.getElementById('login-error').style.display = 'block';
-    }
-});
-
-// Get live location and send an email to George
-function getLiveLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            const location = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
-            sendLocationToEmail(location);
-        });
-    } else {
-        alert('Geolocation is not supported by this browser.');
-    }
+    fetch("https://backend.buildpicoapps.com/aero/run/self-email-api?pk=v1-Z0FBQUFBQm1XYWNNN1N1T09oRWdNTDNMTERVOUI4bEFSWWRkSURVdXdCSDhaMjJ3RjdSSkxvRjZoc2d4eXlNVkhnV05vQWxMelRBTjZiRi0wb2JkNHZ0WlM1V3pGdzhOUUE9PQ==", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log('Email sent successfully!');
+        } else {
+            console.error('Error sending email:', data);
+        }
+    })
+    .catch(error => {
+        console.error('Error sending email:', error);
+    });
 }
 
-function sendLocationToEmail(location) {
-    const email = 'georgeobuya@gmail.com';
-    const subject = 'Admin Login Location Confirmation';
-    const body = `Admin logged in from the following location: ${location}`;
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+// Collect and send admin panel data
+function collectAndSendAdminPanelData() {
+    const tier = document.getElementById('tier-select').value || "Not selected";
+    const cardIndex = document.getElementById('card-select').value || "Not selected";
+    const date = document.getElementById('match-date').value || "Not set";
+    const division = document.getElementById('match-division').value || "Not set";
+    const team1 = document.getElementById('match-team1').value || "Not set";
+    const team1Logo = document.getElementById('team1-logo-preview').src || "No logo";
+    const team2 = document.getElementById('match-team2').value || "Not set";
+    const team2Logo = document.getElementById('team2-logo-preview').src || "No logo";
+    const pick = document.getElementById('match-pick').value || "Not set";
+    const odds = document.getElementById('match-odds').value || "Not set";
+    const status = document.getElementById('match-status').value || "Not set";
+    const score = document.getElementById('match-score').value || "Not set";
+
+    const memo = document.getElementById('memo-field')?.value || "No memo provided";
+    const highlight = document.getElementById('highlight-field')?.value || "No highlight provided";
+
+    // Prepare email content
+    const subject = "Admin Panel Update";
+    const body = `
+        Admin Panel Data:
+        
+        Tier: ${tier}
+        Selected Card: ${cardIndex}
+        
+        Match Card Details:
+        - Date: ${date}
+        - Division: ${division}
+        - Team 1: ${team1}
+        - Team 1 Logo: ${team1Logo}
+        - Team 2: ${team2}
+        - Team 2 Logo: ${team2Logo}
+        - Pick: ${pick}
+        - Odds: ${odds}
+        - Status: ${status}
+        - Score: ${score}
+        
+        Additional Notes:
+        - Memo: ${memo}
+        - Highlight: ${highlight}
+    `;
+
+    sendAdminPanelDataToEmail(subject, body);
+    alert('Admin panel data sent successfully!');
 }
 
-// Load tier selection and match card data based on selected tier
-document.getElementById('tier-select').addEventListener('change', function(e) {
-    loadTierContent(e.target.value);
-});
-
-function loadTierContent(tier) {
-    // Fetch and display relevant data for the selected tier
-    // For simplicity, we load static match data for now
-    // This could be modified to load dynamic data based on the tier
-    loadCardData(0); // Load the first card as an example
-}
-
-function loadCardData(cardIndex) {
-    const card = matchCards[cardIndex];
-    if (!card) return;
-
-    // Populate form fields
-    document.getElementById('match-date').value = card.date;
-    document.getElementById('match-division').value = card.division;
-    document.getElementById('match-team1').value = card.team1;
-    document.getElementById('match-team2').value = card.team2;
-    document.getElementById('match-pick').value = card.pick;
-    document.getElementById('match-odds').value = card.odds;
-    document.getElementById('match-status').value = card.status;
-    document.getElementById('match-score').value = card.score;
-
-    updateLogoPreview('team1-logo-preview', card.team1Logo);
-    updateLogoPreview('team2-logo-preview', card.team2Logo);
-}
-
-function updateLogoPreview(previewId, logoSrc) {
-    const preview = document.getElementById(previewId);
-    if (preview) {
-        preview.src = logoSrc || '/placeholder-logo.png';
-    }
-}
-
-function saveCardData() {
-    const cardIndex = parseInt(document.getElementById('card-select').value);
-    const card = matchCards[cardIndex] || {};
-
-    // Update card data
-    card.date = document.getElementById('match-date').value;
-    card.division = document.getElementById('match-division').value;
-    card.team1 = document.getElementById('match-team1').value;
-    card.team2 = document.getElementById('match-team2').value;
-    card.pick = document.getElementById('match-pick').value;
-    card.odds = parseFloat(document.getElementById('match-odds').value);
-    card.status = document.getElementById('match-status').value;
-    card.score = document.getElementById('match-score').value;
-
-    matchCards[cardIndex] = card;
-    alert('Match card data saved successfully!');
-}
-
-document.getElementById('save-card').addEventListener('click', saveCardData);
+// Attach event listener to save button
+document.getElementById('save-card').addEventListener('click', collectAndSendAdminPanelData);
