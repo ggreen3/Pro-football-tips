@@ -1,6 +1,8 @@
-document.getElementById("skip-ad").addEventListener("click", function() {
-    document.getElementById("ad-screen").style.display = "none";
-});
+document.addEventListener("DOMContentLoaded", () => {
+    const adScreen = document.getElementById("ad-screen");
+    const freeTipsSection = document.getElementById("free-tips-section");
+    const skipAdButton = document.getElementById("skip-ad");
+
 
 // Automatically hide ad screen after a delay (e.g., 10 seconds)
 setTimeout(function() {
