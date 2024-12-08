@@ -115,7 +115,7 @@ body {
     display: inline-block;
 }
 
-/* Free Ad Screen */
+/* Free Ad Screen 
 .ad-screen {
     position: fixed;
     top: 0;
@@ -145,6 +145,34 @@ body {
 
 #ad-screen button:hover {
     background-color: #cc7a00;
+}
+*/
+.ad-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.ads-container {
+    margin: 20px;
+}
+
+#skip-ad {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 /* Sporty Theme Enhancements */
