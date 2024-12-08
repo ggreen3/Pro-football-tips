@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Allow manual ad skipping
     skipAdButton.addEventListener("click", showFreeTips);
 
-    // Fetch and render cards from localStorage or use default values
+    /* Fetch and render cards from localStorage or use default values
     const cards = JSON.parse(localStorage.getItem('cards')) || [
         {
             date: '2024-11-22',
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             score: '1-2',
         },
         // Continue similarly for other cards
-    ];
+    ];*/
 
     const tipsGrid = document.querySelector('.tips-grid');
     
