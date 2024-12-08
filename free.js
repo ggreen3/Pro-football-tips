@@ -1,7 +1,12 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const adScreen = document.getElementById("ad-screen");
-    const freeTipsSection = document.getElementById("free-tips-section");
-    const skipAdButton = document.getElementById("skip-ad");
+document.getElementById("skip-ad").addEventListener("click", function() {
+    document.getElementById("ad-screen").style.display = "none";
+});
+
+// Automatically hide ad screen after a delay (e.g., 10 seconds)
+setTimeout(function() {
+    document.getElementById("ad-screen").style.display = "none";
+}, 10000);
+
 
     // Function to show free tips
     const showFreeTips = () => {
