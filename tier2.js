@@ -29,6 +29,51 @@ document.addEventListener("DOMContentLoaded", () => {
             score: '-',
         },
         // Continue similarly for other cards
+        {
+            date: '2024-11-24',
+            team1: 'Team E',
+            team2: 'Team F',
+            pick: 'Away Win',
+            odds: 2.5,
+            status: 'Pending',
+            score: '-',
+        },
+        {
+            date: '2024-11-24',
+            team1: 'Team E',
+            team2: 'Team F',
+            pick: 'Away Win',
+            odds: 2.5,
+            status: 'Pending',
+            score: '-',
+        },
+        {
+            date: '2024-11-24',
+            team1: 'Team E',
+            team2: 'Team F',
+            pick: 'Away Win',
+            odds: 2.5,
+            status: 'Pending',
+            score: '-',
+        },
+        {
+            date: '2024-11-24',
+            team1: 'Team E',
+            team2: 'Team F',
+            pick: 'Away Win',
+            odds: 2.5,
+            status: 'Pending',
+            score: '-',
+        },
+        {
+            date: '2024-11-24',
+            team1: 'Team E',
+            team2: 'Team F',
+            pick: 'Away Win',
+            odds: 2.5,
+            status: 'Pending',
+            score: '-',
+        },
     ];
 
     const tipsGrid = document.querySelector('.tips-grid');
@@ -40,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         marqueeText.textContent = `Pick: ${firstCard.pick} | Odds: ${firstCard.odds} | Match: ${firstCard.team1} vs ${firstCard.team2} | Date: ${firstCard.date}`;
     }
     
-    // Render all cards
+    // Render all cards add image
     cards.forEach(card => {
         const cardElement = document.createElement('div');
         cardElement.classList.add('tip-card');
@@ -51,10 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="division">Division: Premier League</span>
                 <span class="time-posted">Posted: 2 hours ago</span>
             </div>
-            <div class="team-logos">
-                <img src="team1_logo.png" alt="Team 1 Logo" class="team-logo">
-                <img src="team2_logo.png" alt="Team 2 Logo" class="team-logo">
-            </div>
+         
             <div class="team-names">
                 <span>${card.team1}</span>
                 <span>${card.team2}</span>
