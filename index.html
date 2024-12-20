@@ -285,6 +285,53 @@
     </div>
 </section>
 
+<!-- OCR Receipt Validation Section -->
+<section id="ocr-validation" class="section ocr-section">
+    <div class="container">
+        <h2>Validate Your Payment</h2>
+        <p>Upload your payment receipt to access the appropriate tips section.</p>
+        <input type="file" id="receipt-upload" accept="image/*" />
+        <button id="validate-receipt">Validate Receipt</button>
+        <p id="validation-result"></p>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@v2.1.1/dist/tesseract.min.js"></script>
+<script>
+    document.getElementById('validate-receipt').addEventListener('click', () => {
+        const fileInput = document.getElementById('receipt-upload');
+        const resultText = document.getElementById('validation-result');
+
+        if (!fileInput.files.length) {
+            resultText.textContent = 'Please upload a receipt image.';
+            return;
+        }
+
+        const file = fileInput.files[0];
+
+        Tesseract.recognize(file, 'eng', {
+            logger: (info) => console.log(info)
+        })
+        .then(({ data: { text } }) => {
+            console.log('OCR Result:', text);
+
+            if (text.toLowerCase().includes('quelstore pro tips')) {
+                resultText.textContent = 'Validation successful! Redirecting...';
+                setTimeout(() => {
+                    window.location.href = 'free.html'; // Replace with your success page URL
+                }, 2000);
+            } else {
+                resultText.textContent = 'Validation failed. Please try again.';
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            resultText.textContent = 'An error occurred during validation. Please try again.';
+        });
+    });
+</script>
+
+
 
     <!-- Telegram Section -->
     <section id="telegram1" class="telegram">
