@@ -264,19 +264,19 @@
         <p>Access high-odds tips and correct score predictions by subscribing!</p>
         <div class="vip-grid">
             <div class="tip-card vip-card">
-                <p class="vip-price">$5 - VIP Tier 1</p>
+                <p class="vip-price">$5 - 10+odds</p>
                 <a href="https://quelsuretips.hustlesasa.shop/?product=58589" target="_blank">
                     <button>Subscribe</button>
                 </a>
             </div>
             <div class="tip-card vip-card">
-                <p class="vip-price">$10 - VIP Tier 2</p>
+                <p class="vip-price">$10 - Daily Draws</p>
                 <a href="https://quelsuretips.hustlesasa.shop/?product=58592" target="_blank">
                     <button>Subscribe</button>
                 </a>
             </div>
             <div class="tip-card vip-card">
-                <p class="vip-price">$20 - VIP Tier 3</p>
+                <p class="vip-price">$20 - 100+ odds monthly  </p>
                 <a href="https://quelsuretips.hustlesasa.shop/?product=58593" target="_blank">
                     <button>Subscribe</button>
                 </a>
@@ -316,10 +316,24 @@
             console.log('OCR Result:', text);
 
             if (text.toLowerCase().includes('quelstore pro tips')) {
-                resultText.textContent = 'Validation successful! Redirecting...';
-                setTimeout(() => {
-                    window.location.href = 'free.html'; // Replace with your success page URL
-                }, 2000);
+                if (text.includes('1200')) {
+                    resultText.textContent = 'Validation successful for Tier 1! Redirecting...';
+                    setTimeout(() => {
+                        window.location.href = 'tier1.html';
+                    }, 2000);
+                } else if (text.includes('2500')) {
+                    resultText.textContent = 'Validation successful for Tier 2! Redirecting...';
+                    setTimeout(() => {
+                        window.location.href = 'tier2.html';
+                    }, 2000);
+                } else if (text.includes('4500')) {
+                    resultText.textContent = 'Validation successful for Tier 3! Redirecting...';
+                    setTimeout(() => {
+                        window.location.href = 'tier3.html';
+                    }, 2000);
+                } else {
+                    resultText.textContent = 'Validation failed. Amount not recognized.';
+                }
             } else {
                 resultText.textContent = 'Validation failed. Please try again.';
             }
@@ -330,6 +344,7 @@
         });
     });
 </script>
+
 
 
 
